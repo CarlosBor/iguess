@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Download Huggingface model now
 RUN python -c "\
 from transformers import pipeline; \
-pipeline('text-classification', model='distilbert-base-uncased')"
+pipeline('sentiment-analysis')"
 
 # Now copy the actual app code
 COPY app.py .
