@@ -1,0 +1,34 @@
+.wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.checkButton{
+    margin-top:15px;
+}
+
+.weightCorrectContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top:10px;
+}
+
+.feedbackText{
+    display:flex;
+    flex-direction:column;
+}
+
+.relevantText{
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:1.5em;
+}
+
+.textInput{
+    width: 100%;
+    resize: none;
+    min-height: 80px;
+}
