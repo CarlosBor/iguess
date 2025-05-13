@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import style from './IronyChecker.module.css';
+// @ts-ignore
 import GaugeComponent from 'react-gauge-component';
 
 declare global {
     interface Window {
+      SpeechRecognition: any;
       webkitSpeechRecognition: any;
+      SpeechRecognitionEvent: any;
     }
   }
   
@@ -21,7 +24,7 @@ function IronyChecker() {
     alert("Thank you for your feedback!");
   }
 
-  const localCacheCheck = (text) =>{
+  const localCacheCheck = (text:string) =>{
     if (localStorage.getItem(text)==null){
         return null;
     }else{
@@ -31,13 +34,14 @@ function IronyChecker() {
   }
 
   const checkIrony = async () => {
-    if(text==""){
-        alert("Please say something");
-        return;
+    if(text===""){
+      alert("Please enter text");
+      return;
     }
-    if(localCacheCheck(text)){
-        setResult(localCacheCheck(text))
-    } else {
+    const cached = localCacheCheck(text);
+      if (cached !== null) {
+        setResult(parseInt(cached));
+      } else {
         const response = await fetch('http://localhost:8000/predict', {
         method: 'POST',
         headers: {
@@ -45,13 +49,12 @@ function IronyChecker() {
         },
             body: JSON.stringify({ text }),
         });
-
         const data = await response.json();
         const adjustedData = data.result[0].label === 'irony' ? (data.result[0].score/2) + 0.5 : data.result[0].score/2;
         const dataTwoDigits = (adjustedData*100+"").substring(0,2);
         setResult(parseInt(dataTwoDigits));
         setSentText(text);
-        localStorage.setItem(text, parseInt(dataTwoDigits));
+        localStorage.setItem(text, dataTwoDigits);
     }
   };
 
