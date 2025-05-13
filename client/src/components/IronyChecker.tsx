@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import style from './IronyChecker.module.css';
+
 // @ts-ignore
 import GaugeComponent from 'react-gauge-component';
 
@@ -49,6 +50,7 @@ function IronyChecker() {
         },
             body: JSON.stringify({ text }),
         });
+
         const data = await response.json();
         const adjustedData = data.result[0].label === 'irony' ? (data.result[0].score/2) + 0.5 : data.result[0].score/2;
         const dataTwoDigits = (adjustedData*100+"").substring(0,2);
